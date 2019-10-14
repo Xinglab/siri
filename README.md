@@ -11,18 +11,19 @@ SIRI is a general tool for quantifying the percent of intron inclusions in RNA-s
 
 #### Types of PI (Percent of Introns) calculation
 #####  PI_Junction:
-  Inclusion counts divided by the sum of inclusion and skipping junction counts.
+	Inclusion counts divided by the sum of inclusion and skipping junction counts.
 ##### PI_JunctionIntron:
-  Inclusion counts divided by the sum of inclusion, skipping junction counts and intron body counts.
+	Inclusion counts divided by the sum of inclusion, skipping junction counts and intron body counts.
 #### Types of intron retention
-  U: 
-      Introns that are not partly overlapped with exons or overlapped with other introns.
+	U: 
+    	Introns that are not partly overlapped with exons or overlapped with other introns.
     E:
-      Introns that are partly overlapped with exons but not overlapped with other introns.
+    	Introns that are partly overlapped with exons but not overlapped with other introns.
     I:  
-      Introns that are overlapped with other introns but not overlapped with exons.
+    	Introns that are overlapped with other introns but not overlapped with exons.
     EI: 
-      Introns that are both overlapped with exons and other introns.
+    	Introns that are both overlapped with exons and other introns.
+      
 ### Requirements
 1. Install [Python 2.7.x](https://www.python.org/downloads)
 2. Install [pysam](https://pypi.python.org/pypi/pysam/0.8.4)
@@ -33,53 +34,55 @@ The source code can be directly called from Python.
 ../bin/SIRI --gtf test.gtf --bam test_R1.bam,test_R2.bam --anchor 8 --length 100 --lib first -o SIRI_Output
 </code>
 ### Required Parameters
-    --gtf:
-      gtf files provided for PI estimation.
-  --bam/bam_files:
-    s1.bam/s1.sam[,s2.bam/s2.sam]. STAR mapping results for all of samples in bam/sam format. Different samples are separated by commas.
+  	--gtf:
+    	gtf files provided for PI estimation.
+	--bam/bam_files:
+		s1.bam/s1.sam[,s2.bam/s2.sam]. STAR mapping results for all of samples in bam/sam format. Different samples are separated by commas.
     --anchor:
-      The anchor length in nucleotide. The program will only count reads spanning junctions with at least this anchor length on each side. The default is 8.
+    	The anchor length in nucleotide. The program will only count reads spanning junctions with at least this anchor length on each side. The default is 8.
     --length:
-    The length of reads specified by user.
+		The length of reads specified by user.
     --lib:
-      The library type with choices of unstrand/first/second. The details are explained in the parameter of library-type in tophat2. The default is unstrand.
+    	The library type with choices of unstrand/first/second. The details are explained in the parameter of library-type in tophat2. The default is unstrand.
     -o:
-      The output directory of results.
+    	The output directory of results.
 ### Output list
 #### results
 The folder contains the final output of PI quantification (Intron_PI.txt).
-  
+	
     The detailed explanation of column names for Intron_PI.txt.
     
-      Intron_id:                         Intron Id representing the chromosome position, start and end
-      Gene_id:                           Gene id of intron residing genes
-      Strand:                            Strand of intron residing genes
-      Chr:                               Chromosome name of introns
-      Start:                             Start coordinate of introns
-      End:                               End coordinate of introns
-      Annotated:                         Whether this intron was annotated in the gtf file as retained intron event
-      Attributes:                        One of the four intron types, U/E/I/EI
-      Inclusion_counts:                  Inclusion junction counts separated by commas
-      Skipping_counts:                   Skipping counts separated by commas
-        Inclusion_counts_with_intron_body: Inclusion junction counts plus counts from intron body.
-        Inclusion_length:                  Effective inclusion junction length
-      Skipping_length:                   Effective skipping length
-      Intron_body_length:                Effective inclusion and intron body length
-      PI_Junction:                       PI_Junction value separated by commas
-      PI_JunctionIntron:                 PI_JunctionIntron separated by commas
+    	Intron_id:                         Intron Id representing the chromosome position, start and end
+    	Gene_id:                           Gene id of intron residing genes
+    	Strand:                            Strand of intron residing genes
+    	Chr:                               Chromosome name of introns
+    	Start:                             Start coordinate of introns
+    	End:                               End coordinate of introns
+    	Annotated:                         Whether this intron was annotated in the gtf file as retained intron event
+    	Attributes:                        One of the four intron types, U/E/I/EI
+    	Inclusion_counts:                  Inclusion junction counts separated by commas
+    	Skipping_counts:                   Skipping counts separated by commas
+      Inclusion_counts_with_intron_body: Inclusion junction counts plus counts from intron body.
+      Inclusion_length:                  Effective inclusion junction length
+    	Skipping_length:                   Effective skipping length
+    	Intron_body_length:	               Effective inclusion and intron body length
+    	PI_Junction:       	               PI_Junction value separated by commas
+    	PI_JunctionIntron:                 PI_JunctionIntron separated by commas
+      
 #### gtfs
 An intermediate folder contains different types of gtf files to run the program. Use test.gtf as examples.
 
-  test.gtf:
-      the ensembl gtf files. This file should be provided by user.
+	test.gtf:
+    	the ensembl gtf files. This file should be provided by user.
     Exon_test.gtf:
-      the gtf file contains exons only
+    	the gtf file contains exons only
     Intron_test.gtf:
-      the gtf file contains intron only
+    	the gtf file contains intron only
     Intron_Annotated_test.gtf:
-      the gtf file contains the attributes whether the intron was annotated as retained introns in the original gtf files
+    	the gtf file contains the attributes whether the intron was annotated as retained introns in the original gtf files
     Intron_attri_test.gtf:
-      the gtf file contains the attributes whether the intron was overlapped with Exon and whether the intron is overlapped with other introns.
+    	the gtf file contains the attributes whether the intron was overlapped with Exon and whether the intron is overlapped with other introns.
+      
 #### counts
 An intermediate folder contains all of the count files
 
