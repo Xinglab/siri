@@ -30,9 +30,11 @@ SIRI is a general tool for quantifying the percent of intron inclusions in RNA-s
 ### Installation
 The source code can be directly called from Python.
 ### Usage
+
 <code>
 ../bin/SIRI --gtf test.gtf --bam test_R1.bam,test_R2.bam --anchor 8 --length 100 --lib first -o SIRI_Output
 </code>
+
 ### Required Parameters
   	--gtf:
     	gtf files provided for PI estimation.
