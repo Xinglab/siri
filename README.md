@@ -2,9 +2,9 @@
 
 Introduction
 ----------
-SQUID is a general tool for quantifying the percent of intron inclusions in RNA-seq data. 
+SIRI is a general tool for quantifying the percent of intron inclusions in RNA-seq data. 
 <p>
-  <figure class="figure1" data-title="HOMER motif"><img alt="" src="docs/intron_type.png" />
+  <figure class="figure1" data-title="HOMER motif"><img alt="" src="https://en.wikipedia.org/wiki/Tiger#/media/File:Panthera_tigris_tigris_Tidoba_20150306.jpg" />
   <figcaption>
   </figcaption>
   </figure>
@@ -12,7 +12,7 @@ SQUID is a general tool for quantifying the percent of intron inclusions in RNA-
 
 #### Types of PI (Percent of Introns) Calculation
 
-  PI_Junction: 
+PI_Junction: 
     Inclusion counts divided by the sum of inclusion and skipping junction counts
   PI_Density:
     The observed counts divided by the expected counts of the intron
