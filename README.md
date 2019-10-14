@@ -32,7 +32,7 @@ The source code can be directly called from Python.
 ### Usage
 
 <code>
-../bin/SIRI --gtf test.gtf --bam test_R1.bam,test_R2.bam --anchor 8 --length 100 --lib first -o SIRI_Output
+../bin/SIRI --gtf test.gtf --bam test_R1.bam,test_R2.bam --anchor 8 --length 100 --lib first --read P -o SIRI_Output
 </code>
 
 ### Required Parameters
@@ -48,6 +48,9 @@ The source code can be directly called from Python.
     	The library type with choices of unstrand/first/second. The details are explained in the parameter of library-type in tophat2. The default is unstrand.
     -o:
     	The output directory of results.
+    --read:
+	The sequencing strategy of producing reads with choices of P(paired end) or S (single end). The default is P
+
 ### Output list
 #### results
 The folder contains the final output of PI quantification (Intron_PI.txt).
