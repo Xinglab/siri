@@ -1,9 +1,14 @@
-## SQUID: Stringent Quantitation of Unspliced Intron by Deep-sequencing
+## SIRI: Systematic Investigation of Retained Introns
 
 Introduction
 ----------
 SQUID is a general tool for quantifying the percent of intron inclusions in RNA-seq data. 
-<p><figure class="figure1" data-title="HOMER motif"><img alt="" src="docs/intron_type.png" /><figcaption></figcaption></figure></p>
+<p>
+  <figure class="figure1" data-title="HOMER motif"><img alt="" src="docs/intron_type.png" />
+  <figcaption>
+  </figcaption>
+  </figure>
+</p>
 
 #### Types of PI (Percent of Introns) Calculation
 
