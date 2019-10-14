@@ -49,7 +49,7 @@ The source code can be directly called from Python.
     -o:
     	The output directory of results.
     --read:
-	The sequencing strategy of producing reads with choices of P(paired end) or S (single end). The default is P
+    	The sequencing strategy of producing reads with choices of P(paired end) or S (single end). The default is P
 
 ### Output list
 #### results
