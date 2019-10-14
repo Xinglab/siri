@@ -64,11 +64,11 @@ The folder contains the final output of PI quantification (Intron_PI.txt).
     	Attributes:                        One of the four intron types, U/E/I/EI
     	Inclusion_counts:                  Inclusion junction counts separated by commas
     	Skipping_counts:                   Skipping counts separated by commas
-	Inclusion_counts_with_intron_body: Inclusion junction counts plus counts from intron body.
-	Inclusion_length:                  Effective inclusion junction length
+    	Inclusion_counts_with_intron_body: Inclusion junction counts plus counts from intron body.
+    	Inclusion_length:                  Effective inclusion junction length
     	Skipping_length:                   Effective skipping length
-    	Intron_body_length:	           Effective inclusion and intron body length
-    	PI_Junction:       	           PI_Junction value separated by commas
+    	Intron_body_length:                Effective inclusion and intron body length
+    	PI_Junction:                       PI_Junction value separated by commas
     	PI_JunctionIntron:                 PI_JunctionIntron separated by commas
       
 #### gtfs
