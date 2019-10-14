@@ -1,7 +1,13 @@
 #!/bin/python
-import getopt, copy, re, os, sys, logging, time, datetime, pysam, os.path
+import getopt
+import copy
+import re
+import os
+import sys
+import time
+import datetime
+import pysam
 from collections import defaultdict
-
 
 def read_file(filename):
     with open(filename) as fp:
@@ -20,7 +26,7 @@ def get_read_dictionary(gtf_file, lib, bin_size=1000):
     dict_intron_window = defaultdict(lambda: [])  # the dict to store the introns in a certain window
     for sp in read_file(gtf_file):
         if lib == 'unstrand':
-            key = (sp[0], int(sp[3]), int(sp[4]), '*')
+            key = (sp[0], int(sp[3]), int(sp[4]), 'unstrand')
         else:
             key = (sp[0], int(sp[3]), int(sp[4]), sp[6])
         gene_id = sp[8].split('"')[1]
@@ -104,7 +110,7 @@ def get_exon_gene_dictionary(gtf_file, bin_size=1000):
     return dict_gene_count, dict_gene_count_windows, dict_gene2exon, dict_exon2gene
 
 
-def parse_bam_file(Total,output, gtf, bam_file, read, lib, length, anchor, bin_size=1000):
+def parse_bam_file(Total, output, gtf, bam_file, read, lib, length, anchor, bin_size=1000):
     dict_count, dict_intron_left, dict_intron_right, dict_intron_left_right, dict_intron_window = get_read_dictionary(
         gtf.split(',')[0], lib, bin_size)
     dict_gene_count, dict_gene_count_windows, dict_gene2exon, dict_exon2gene = get_exon_gene_dictionary(
@@ -112,7 +118,9 @@ def parse_bam_file(Total,output, gtf, bam_file, read, lib, length, anchor, bin_s
     samfile = pysam.AlignmentFile(bam_file, 'rb')
     sam_list = samfile.fetch()
     total_reads = 0
-    for iters in sam_list:
+    for reads_index, iters in enumerate(sam_list):
+        if reads_index > 0 and reads_index % 100000 == 0:
+            print '...parsing reads {}'.format(reads_index)
         if iters.get_tag('NH') != 1:
             continue
         if 'D' in iters.cigarstring or 'H' in iters.cigarstring or 'S' in iters.cigarstring or 'I' in iters.cigarstring:
@@ -280,7 +288,7 @@ def parse_bam_file(Total,output, gtf, bam_file, read, lib, length, anchor, bin_s
     fw = open('{0}_intron.txt'.format(output), 'w')
     for gtf_sp in read_file(gtf.split(',')[0]):
         if lib == 'unstrand':
-            key = (gtf_sp[0], int(gtf_sp[3]), int(gtf_sp[4]), '*')
+            key = (gtf_sp[0], int(gtf_sp[3]), int(gtf_sp[4]), 'unstrand')
         else:
             key = (gtf_sp[0], int(gtf_sp[3]), int(gtf_sp[4]), gtf_sp[6])
         if dict_count[key][9] == 'true':
@@ -300,7 +308,7 @@ def parse_bam_file(Total,output, gtf, bam_file, read, lib, length, anchor, bin_s
     fw.close()
 
 
-def main():
+def parse_args():
     options, args = getopt.getopt(sys.argv[1:], 'o:',
                                   ['gtf=', 'anchor=', 'lib=', 'read=', 'length=', 'bam=', 'output=', 'Total='])
     gtf = ''
@@ -350,6 +358,5 @@ def main():
             os.system(cmd)
     parse_bam_file(Total, output, gtf, bam, read, lib, length, anchor, bin_size=1000)
 
-
 if __name__ == "__main__":
-    main()
+    parse_args()

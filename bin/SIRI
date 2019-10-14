@@ -1,0 +1,103 @@
+#!/usr/bin/env python
+import getopt
+import copy
+import re
+import os
+import sys
+import time
+import datetime
+import pysam
+from collections import defaultdict
+
+def makedirs(_dir):
+    try:
+        os.stat(_dir)
+    except:
+        os.makedirs(_dir)
+
+def parse_args():
+    options, args = getopt.getopt(sys.argv[1:], 'o:',
+                                  ['gtf=', 'anchor=', 'lib=', 'read=', 'length=', 'bam_files=', 'output=', 'skip_gtf='])
+    gtf = ''
+    read = ''
+    bam_files = ''
+    lib = 'unstrand'
+    length = 0
+    anchor = 0
+    output = ''
+    thread = 1
+    update = 'false'
+    skip_gtf = 'false'
+
+    for opt, arg in options:
+        if opt in ('-o', '--output'):
+            output = arg
+        elif opt in ('--gtf'):
+            gtf = arg
+        elif opt in ('--bam_files'):
+            bam_files = arg
+        elif opt in ('--lib'):
+            lib = arg
+        elif opt in ('--read'):
+            read = arg
+        elif opt in ('--length'):
+            length = int(arg)
+        elif opt in ('--anchor'):
+            anchor = int(arg)
+        elif opt in ('--thread'):
+            thread = arg
+        elif opt in ('--update'):
+            update = arg
+        elif opt in ('--skip_gtf'):
+            skip_gtf = arg
+
+    if not gtf or not read or not bam_files or not output or not length or not anchor:
+        print "Not enough parameters!"
+        print "Program : ", sys.argv[0]
+        print "A python program to count the reads for retained intron events for varities of junction from a series of bam file."
+        print "Usage :", sys.argv[0], " --gtf: the intron gtf file and gtf file seperated by comma;"
+        print "Usage :", sys.argv[0], " --length:the length of reads;"
+        print "Usage :", sys.argv[0], " --anchor:the anchor length of the read;"
+        print "Usage :", sys.argv[0], " --bam_files: the bam file,multiple bam file seperated by commas;"
+        print "Usage :", sys.argv[0], " --lib: the library type;"
+        print "Usage :", sys.argv[0], " --read: The sequencing strategy of producing reads with choices of P/S;"
+        print "Usage :", sys.argv[0], ' --output: the directory for PI results'
+        print "Usage :", sys.argv[0], " --thread: the thread to get bam reads counts."
+        print 'Usage :', sys.argv[0], " --update: update intron attributes based on data"
+        print 'Usage :', sys.argv[0], " --skip_gtf: skipping generating gtfs for intron events"
+        print datetime.datetime.now()
+        sys.exit()
+
+    script_dir = os.path.dirname(os.path.realpath(__file__))
+    gtf2intron_gtf_exe = 'python {}/../SIRI/gtf2intron_gtf.py'.format(script_dir)
+    count2intron_fi_exe = 'python {}/../SIRI/count2intron_fi.py'.format(script_dir)
+
+    ## generate gtf
+    path, gtf_name = os.path.split(gtf)
+    if path == '':
+        path = '.'
+    if skip_gtf != 'false':
+        if os.path.exists(path + '/Intron_attri_' + gtf_name):
+            print 'intron gtf has been generated, skipping...'
+        else:
+            print 'generating SIRI gtf files'
+            cmd = gtf2intron_gtf_exe + ' --gtf {} --strand {}'.format(gtf, lib)
+            os.system(cmd)    
+    else:
+        makedirs(output + '/gtfs/')
+        os.system('cp {} {}'.format(gtf, output + '/gtfs/' + gtf_name))
+        gtf = output + '/gtfs/' + gtf_name
+        path = output + '/gtfs'
+        cmd = gtf2intron_gtf_exe + ' --gtf {} --strand {}'.format(gtf, lib)
+        os.system(cmd)
+
+    ## generate fi estimates
+    count_out_dir = output + '/count'
+    makedirs(count_out_dir)
+    gtfs = '{},{}'.format(path + '/Intron_' + gtf_name, gtf)
+    cmd = count2intron_fi_exe + ' --gtf {} --length {} --anchor {} --bam_files {} -o {} --lib {} --read {} --thread {} --update {}'.format(
+          gtfs, length, anchor, bam_files, count_out_dir, lib, read, thread, update)
+    os.system(cmd)
+
+if __name__=="__main__":
+    parse_args()
