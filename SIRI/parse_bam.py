@@ -352,10 +352,11 @@ def parse_args():
         print "Usage :", sys.argv[0], " --Total: the file store the total uniquely mapped reads."
         print datetime.datetime.now()
         sys.exit()
+        
     if not os.path.exists(bam + '.bai'):
         if not bam.endswith('.sam'):
-            cmd = 'samtools index %s' % bam
-            os.system(cmd)
+            pysam.index(bam)
+            
     parse_bam_file(Total, output, gtf, bam, read, lib, length, anchor, bin_size=1000)
 
 if __name__ == "__main__":
