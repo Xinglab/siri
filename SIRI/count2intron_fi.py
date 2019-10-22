@@ -146,6 +146,8 @@ def count2fi(gtf, lib, length, anchor, sample_number, output, update):
         PI_J_Intron = [0] * sample_number
         sk_l = length - 2 * anchor + 1
         intron_length = int(intron_count_list[6]) - int(intron_count_list[5]) + 1
+        if intron_length == 0:
+            continue
         in_l = length - 4 * anchor + 2 + min(intron_length, length)
        	#in_l = 2 * (length - 2 * anchor + 1)
         intron_body_length = intron_length + length - 2 * anchor + 1
