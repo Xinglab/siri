@@ -84,6 +84,21 @@ The folder contains the final output of PI quantification (intron.PI.txt).
       Intron_body_length:                Effective inclusion and intron body length
       PI_Junction:                       PI_Junction value separated by commas
       PI_JunctionIntron:                 PI_JunctionIntron separated by commas
+
+#### Types of PI (Percent of Introns) calculation
+#####  PI_Junction:
+    Inclusion counts divided by the sum of inclusion and skipping junction counts.
+##### PI_JunctionIntron:
+    Inclusion counts divided by the sum of inclusion, skipping junction counts and intron body counts.
+#### Types of intron retention
+    U: 
+        Introns that are not partly overlapped with exons or overlapped with other introns.
+    E:
+        Introns that are partly overlapped with exons but not overlapped with other introns.
+    I:  
+        Introns that are overlapped with other introns but not overlapped with exons.
+    EI: 
+        Introns that are both overlapped with exons and other introns.  
       
 #### gtfs
 An intermediate folder contains different types of gtf files to run the program. Use test.gtf as examples.
