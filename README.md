@@ -15,7 +15,7 @@ SIRI is a general tool for quantifying the percent of intron inclusion in RNA-se
 - [What is SIRI?](#siri)
 - [Installation](#install)
   - [Dependencies](#depen)
-  - [Install isoCirc from source](#src)
+  - [Install SIRI from source](#src)
 - [Getting started](#start)
 - [Input and output](#input_output)
   - [Input files](#input_file)
