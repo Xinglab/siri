@@ -89,7 +89,7 @@ The folder contains the final output of PI quantification (intron.PI.txt).
 #####  PI_Junction:
     Inclusion counts divided by the sum of inclusion and skipping junction counts.
 ##### PI_JunctionIntron:
-    Inclusion counts divided by the sum of inclusion, skipping junction counts and intron body counts.
+    Sum of inclusion counts and intron body counts divided by the sum of inclusion, skipping junction counts and intron body counts.
 #### Types of intron retention
     U: 
         Introns that are not partly overlapped with exons or overlapped with other introns.
